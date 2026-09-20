@@ -1,0 +1,37 @@
+<!DOCTYPE html> <!-- 1. Declarația tipului de document: Îi spune browserului că folosim HTML5 (cea mai nouă versiune). -->
+<html lang="ro"> <!-- 2. Elementul Rădăcină (Root): Tot codul stă înăuntrul acestui tag. -->
+    
+    <head> <!-- 3. Partea de "Creier" (Metadate) -->
+        <!-- Aici stau informații PENTRU browser, NU pentru utilizator. Nimic de aici nu e vizibil pe pagina albă (excepție: titlul din tab-ul de sus). -->
+        <meta charset="UTF-8">
+        <title>Task Tracker Login</title>
+    </head>
+    
+    <body>
+
+        <div class="login-container">
+            <form>
+                <label for="login-email"> Email </label>
+                <input 
+                    type="email" 
+                    id="login-email"
+                    data-testid="input-email"
+                >
+                <label for="login-password"> Password </label>
+                <input
+                    type="password"
+                    id="login-password"
+                    data-testid="input-password"
+                >
+                <button
+                    type="submit"
+                    data-testid="btn-submit-login"
+                >
+                    Log in
+                </button>
+            </form>       
+        </div> 
+        
+    </body>
+
+</html>
