@@ -1,36 +1,26 @@
 <!DOCTYPE html>
 <html lang="ro">
-    
-    <head>
-        <meta charset="UTF-8">
-        <title>Task Tracker Login</title>
-    </head>
-    
-    <body>
+<head>
+  <meta charset="UTF-8">
+  <title>Task Tracker</title>
+</head>
+<body>
+  <header>
+    <!-- Cerința: Creează bara de navigație cu tag-uri semantice și test-id -->
+    <nav>
+      <h1>Task Tracker</h1>
+      <button data-testid="btn-login">Log In</button>
+    </nav>
+  </header>
 
-        <div class="login-container">
-            <form>
-                <label for="login-email"> Email </label>
-                <input 
-                    type="email" 
-                    id="login-email"
-                    data-testid="input-email"
-                >
-                <label for="login-password"> Password </label>
-                <input
-                    type="password"
-                    id="login-password"
-                    data-testid="input-password"
-                >
-                <button
-                    type="submit"
-                    data-testid="btn-submit-login"
-                >
-                    Log in
-                </button>
-            </form>       
-        </div> 
-        
-    </body>
-
+  <main>
+    <section id="practice-section">
+      <!-- Cerința: Adaugă formularul de adăugare task -->
+      <form>
+        <input type="text" id="task-input" placeholder="Nume Task">
+        <button type="submit" data-testid="submit-btn">Adaugă Task</button>
+      </form>
+    </section>
+  </main>
+</body>
 </html>
