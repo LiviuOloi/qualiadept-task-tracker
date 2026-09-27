@@ -3,34 +3,162 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Task Tracker Login</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <div class="login-container">
-    <form>
-      <label for="login-email"> Email </label>
-      <input
-                    type="email"
-                    id="login-email"
-                    data-testid="input-email"
-                >
-      <label for="login-password"> Password </label>
-      <input
-                    type="password"
-                    id="login-password"
-                    data-testid="input-password"
-                >
+  <h1>Task Tracker Pro - QA Edition</h1>
+  <p>Platforma completă de exersare a automatizării</p>
+  <header>
+    <nav class="navbar">
+      <img
+                src="logo.png"                
+                id="logo"
+            >
       <button
-                    type="submit"
-                    data-testid="btn-submit-login"
-                >
-                    Autentificare
-                </button>
-    </form>
-  </div>
+                data-testid="btn-login"
+            >
+            Log In
+            </button>
+    </nav>
+  </header>
 
+  <!--<div class="login-container">
+        <form>
+            <label for="login-email">Email</label>
+            <input
+                type="email"
+                id="login-email"
+                data-testid="input-email"
+            >
+
+            <label for="login-password">Parolă</label>
+            <input
+                type="password"
+                id="login-password"
+                data-testid="input-password"
+            >
+
+            <button
+                type="submit"
+                data-testid="btn-submit-login"
+            >
+                Log In
+            </button>
+        </form>
+    </div>-->
+
+  <main>
+    <!-- Secțiunea de adăugare task -->
+    <section class="task-input-section">
+      <h2>Adaugă un Task Nou</h2>
+      <form id="add-task-form">
+        <label for="task-name">Nume Task:</label>
+        <input
+                    type="text"
+                    id="task-name"
+                    data-testid="input-task-name"
+                    placeholder="Ex: Scrie scenarii E2E" required
+                >
+
+        <label for="task-priority">Prioritate:</label>
+        <select
+                    id="task-priority"
+                    data-testid="select-priority"
+                >
+                    <option value="low">Scăzută</option>
+                    <option value="medium" selected>Medie</option>
+                    <option value="high">Critică</option>
+                </select>
+
+        <label for="due-date">Termen limită:</label>
+        <input
+                    type="date"
+                    id="due-date"
+                    data-testid="input-due-date"
+                >
+
+        <button
+                    type="submit"
+                    id="add-task-btn"
+                    data-testid="submit-new-task"
+                >
+                    Salvează Task
+                </button>
+        <button
+                    type="submit"
+                    data-testid="submit-task-btn" disabled
+                >
+                    Submit
+                </button>
+      </form>
+    </section>
+
+    <!-- Secțiunea de afișare task-uri (Tip Listă) -->
+    <section class="task-list-section">
+      <h2>Task-uri Active</h2>
+      <ul id="active-tasks-list">
+        <li class="task-item" data-task-status="pending">
+          <input
+                        type="checkbox"
+                        class="complete-checkbox"
+                        data-testid="check-task-1"
+                    >
+          <span>Învață arhitectura DOM</span>
+          <span class="badge priority-high">Critică</span>
+          <button
+                        class="delete-btn"
+                        data-testid="delete-task-1"
+                    >
+                        Șterge
+                    </button>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Secțiunea de istoric (Tip Tabel) -->
+    <section class="task-history-section">
+      <h2>Istoric Task-uri Finalizate</h2>
+      <table id="history-table" border="1">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nume Task</th>
+            <th>Data Finalizării</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#1001</td>
+            <td>Setare Boilerplate HTML</td>
+            <td>09-Aug-2026</td>
+          </tr>
+          <tr>
+            <td>#1002</td>
+            <td>Înțelegere Arhitectură Client-Server</td>
+            <td>21-Aug-2026</td>
+          </tr>
+          <tr>
+            <td>#1003</td>
+            <td>To be deleted</td>
+            <td>22-Aug-2026</td>
+            <td><button class="delete-row">Sterge</button></td>
+          </tr>
+          <tr>
+            <td>#1004</td>
+            <td>Messi</td>
+            <td>23-Aug-2026</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <footer>
+    <p>(c) 2026 QualiAdept Bootcamp</p>
+  </footer>
 </body>
 
 </html>
