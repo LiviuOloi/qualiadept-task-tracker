@@ -1,0 +1,39 @@
+/* ============================================================
+ * Sesiunea 2: CSS & DOM Selectors
+ * ============================================================
+ * Completează fișierul cu regulile CSS conform cerințelor:
+ * 1. Meniu Flexibil: Stilizare pentru clasa .navbar (Flexbox) și #logo
+ * 2. Stări Dinamice: Selectori pentru :hover (butoane active) și :disabled (butoane inactive)
+ * 3. Selectori Structurali: Stilizare pentru al 3-lea rând (tr:nth-child(3)) și .delete-row
+ * ============================================================ */
+
+/* Scrie regulile CSS aici: */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+#logo {
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+}
+
+.navbar button[data-testid="btn-login"] {
+  background-color: #750b79;
+  color: white;
+  padding: 6px 12px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+tr:nth-child(3) {
+  background-color: #b62525;
+}
+
+button:not(:disabled):hover {
+  background-color: #23816d;
+  color: white;
+}
