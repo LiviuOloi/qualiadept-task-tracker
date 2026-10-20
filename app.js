@@ -46,3 +46,42 @@ proceseazaTaskNou({
 for (let i = 0; i < listaTaskuri.length; i++) {
     console.log(`Task Nume: ${listaTaskuri[i].nume}`);
 }
+
+
+// 1. Selectare elemente DOM
+
+const form = document.querySelector("#add-task-form");
+const inputTask = document.querySelector("#task-name");
+const table = document.querySelector("#history-table tbody");
+
+
+// 2. Ascultător eveniment 'submit' și adăugare dinamică în tabel
+
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const inputText = inputTask.value; 
+    
+    const newRow = document.createElement("tr");
+
+    const newCell = document.createElement("td");
+    newCell.textContent = inputText;
+    newRow.appendChild(newCell); 
+
+    inputTask.value = "";
+
+// 3. Ștergere dinamică din DOM (Event Delegation pe document sau click pe buton)
+
+    const deleteCell = document.createElement("td");
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.classList.add("delete-row");
+    deleteCell.appendChild(deleteButton);
+    newRow.appendChild(deleteCell);
+    deleteButton.addEventListener("click", () => {
+        newRow.remove();
+    })
+
+    table.appendChild(newRow);
+    
+})
