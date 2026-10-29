@@ -85,3 +85,22 @@ form.addEventListener("submit", (event) => {
     table.appendChild(newRow);
     
 })
+
+const incarcaTaskuriInitiale = async () => {
+    try {
+        const response = await fetch("https://jsonplaceholder.typicode.com/todos?_limit=5");
+        const data = await response.json();
+
+        const listaTaskuri = document.querySelector("#active-tasks-list");
+        data.forEach((task) => {
+            const liNou = document.createElement("li");
+            liNou.textContent = task.title;
+            listaTaskuri.appendChild(liNou);
+        })
+    } catch (error) {
+        console.error("Eroare la incarcarea task-urilor initiale:", error);
+    }
+}
+
+incarcaTaskuriInitiale();
+
