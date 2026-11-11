@@ -90,33 +90,32 @@
                 <button    
                     type="submit" 
                     id="add-task-btn" 
-                    data-testid="submit-new-task"
+                    data-testid="submit-new-btn"
                 >
                     Salvează Task
                 </button>
+                <p 
+                    id="error-message"
+                    data-testid="error-message"
+                >
+                </p>                
                 
             </form>
         </section>
 
         <!-- Secțiunea de afișare task-uri (Tip Listă) -->
+         <div 
+            id="loading-spinner"
+            data-testid="loading-spinner"
+        >
+        Se incarca task-urile...
+        </div>
         <section class="task-list-section">
             <h2>Task-uri Active</h2>
-            <ul id="active-tasks-list">
-                <li class="task-item" data-task-status="pending">
-                    <input 
-                        type="checkbox" 
-                        class="complete-checkbox" 
-                        data-testid="check-task-1"
-                    >
-                    <span>Învață arhitectura DOM</span>
-                    <span class="badge priority-high">Critică</span>
-                    <button 
-                        class="delete-btn" 
-                        data-testid="delete-task-1"
-                    >
-                        Șterge
-                    </button>
-                </li>
+            <ul 
+                id="active-tasks-list"
+                data-testid="task-list"
+                >
             </ul>
         </section>
 
