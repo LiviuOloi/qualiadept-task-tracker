@@ -2,14 +2,14 @@
 
 const listaTaskuri = [
     {
-    id: 1001,
-    nume: "Setare Boilerplate HTML",
-    completat: true
+        id: 1001,
+        nume: "Setare Boilerplate HTML",
+        completat: true
     },
     {
-    id: 1002,
-    nume: "Înțelegere Arhitectură Client-Server",
-    completat: true 
+        id: 1002,
+        nume: "Înțelegere Arhitectură Client-Server",
+        completat: true
     }
 ];
 
@@ -48,59 +48,174 @@ for (let i = 0; i < listaTaskuri.length; i++) {
 }
 
 
+
 // 1. Selectare elemente DOM
 
 const form = document.querySelector("#add-task-form");
 const inputTask = document.querySelector("#task-name");
-const table = document.querySelector("#history-table tbody");
+const activeTasksList = document.querySelector("#active-tasks-list");
+const errorMessage = document.querySelector("#error-message");
+
 
 
 // 2. Ascultător eveniment 'submit' și adăugare dinamică în tabel
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const inputText = inputTask.value; 
-    
-    const newRow = document.createElement("tr");
+    try {
 
-    const newCell = document.createElement("td");
-    newCell.textContent = inputText;
-    newRow.appendChild(newCell); 
+        const inputText = inputTask.value;
+        const response = await fetch("https://jsonplaceholder.typicode.com/todos", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                title: inputText,
+                completed: false,
+                userId: 1
+            })
+        });
 
-    inputTask.value = "";
+        if (!response.ok) {
+            throw new Error("Eroare la salvarea task-ului pe server");
+        }
 
-// 3. Ștergere dinamică din DOM (Event Delegation pe document sau click pe buton)
+        if (response.status === 201) {
+            console.log("Task adaugat cu succes pe server!");
 
-    const deleteCell = document.createElement("td");
-    const deleteButton = document.createElement("button");
-    deleteButton.textContent = "Delete";
-    deleteButton.classList.add("delete-row");
-    deleteCell.appendChild(deleteButton);
-    newRow.appendChild(deleteCell);
-    deleteButton.addEventListener("click", () => {
-        newRow.remove();
-    })
 
-    table.appendChild(newRow);
-    
-})
+            const newTask = await response.json();
+            console.log("Task-ul adaugat:", newTask);
+            const activeList = document.querySelector("#active-tasks-list");
+            const li = document.createElement("li");
+            const taskTitle = document.createElement("span");
+            taskTitle.classList.add("task-title");
+            taskTitle.textContent = newTask.title;
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Sterge";
+            deleteButton.setAttribute("data-testid", `delete-btn-${newTask.id}`);
+            li.appendChild(taskTitle);
+            li.appendChild(deleteButton);
+            activeList.appendChild(li);
+
+            inputTask.value = "";
+
+        }
+
+    } catch (error) {
+        errorMessage.textContent = "Nu am putut salva task-ul";
+
+    }
+});
 
 const incarcaTaskuriInitiale = async () => {
+
+    const spinner = document.querySelector("#loading-spinner");
+    spinner.style.display = "block"; // Afisam spinner-ul
+    
+
     try {
         const response = await fetch("https://jsonplaceholder.typicode.com/todos?_limit=5");
+        if (!response.ok) {
+            throw new Error("Eroare la incarcarea task-urilor initiale");
+        }
         const data = await response.json();
 
         const listaTaskuri = document.querySelector("#active-tasks-list");
         data.forEach((task) => {
+            const id = task.id;
             const liNou = document.createElement("li");
-            liNou.textContent = task.title;
+            const taskTitle = document.createElement("span");
+            taskTitle.classList.add("task-title");
+            taskTitle.textContent = task.title;
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Sterge";
+            deleteButton.setAttribute("data-testid", `delete-btn-${id}`);
+            liNou.appendChild(taskTitle);
+            liNou.appendChild(deleteButton);
             listaTaskuri.appendChild(liNou);
         })
     } catch (error) {
         console.error("Eroare la incarcarea task-urilor initiale:", error);
+    } finally {
+        spinner.style.display = "none";
     }
 }
 
 incarcaTaskuriInitiale();
+
+activeTasksList.addEventListener("click", async (event) => {
+    console.log(event.target);
+
+    if (event.target.matches("button")) {
+        console.log("Ai apasat pe butonul Sterge!");
+
+        console.log(event.target.getAttribute("data-testid"));
+
+        const taskID = event.target.getAttribute("data-testid").split("-")[2];
+        console.log("ID-ul task-ului de sters este:", taskID);
+
+        const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${taskID}`, {
+            method: "DELETE"
+        });
+
+        const taskToDelete = event.target.closest("li");
+        console.log(taskToDelete);
+
+        if (response.ok) {
+            console.log("Task sters cu succes");
+            taskToDelete.remove();
+        }
+
+
+    }
+
+    if (event.target.matches(".task-title")) {
+        console.log("Ai apasat pe titlu task-ului!");
+
+        event.target.classList.toggle("completed");
+
+    }
+})
+
+
+
+// 7. BONUS: Modul Chaos - Pop-up aleatoriu care interceptează testele UI!
+const initChaosMode = () => {
+    // Calculăm un timp aleatoriu de așteptare între 2000ms și 6000ms
+    const randomDelay = Math.floor(Math.random() * 4000) + 2000;
+
+    setTimeout(() => {
+        // Creăm elementul container (Overlay-ul)
+        const modal = document.createElement('div');
+        modal.className = 'overlay-modal';
+        modal.setAttribute('data-testid', 'promo-overlay');
+
+        // Injectăm cutia promoțională și butonul de închidere
+        modal.innerHTML = `
+            <div class="promo-box">
+                <h3>Ofertă Specială! 🚀</h3>
+                <p>Fă upgrade la versiunea Premium pentru a adăuga task-uri nelimitate!</p>
+                <button class="btn-close-promo" data-testid="close-promo-btn">Nu, mulțumesc</button>
+            </div>
+        `;
+
+        // Atașăm evenimentul de închidere
+        const closeBtn = modal.querySelector('.btn-close-promo');
+        closeBtn.addEventListener('click', () => {
+            modal.remove(); // Distrugem modalul când utilizatorul dă click
+        });
+
+        // "Aruncăm" modalul fizic în pagină (la finalul tag-ului <body>)
+        document.body.appendChild(modal);
+
+        console.warn(`[Chaos Mode] Promo modal a apărut după ${randomDelay}ms!`);
+    }, randomDelay);
+};
+
+// Pornim modul Chaos!
+//initChaosMode();
+
 
