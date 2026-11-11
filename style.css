@@ -33,28 +33,37 @@ body {
 #add-task-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px 10px; 
+  gap: 20px 10px;
   margin-top: 30px;
- 
+
 }
 
 #add-task-form input,
 #add-task-form select {
-    background-color: #272347;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
+  background-color: #272347;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
 }
 
 #add-task-btn {
-  background-color: #6D4AFF;  
+  background-color: #6D4AFF;
   color: white;
   padding: 6px 12px;
   text-decoration: none;
   border-radius: 5px;
   grid-column: auto / span 2;
   transition: background-color 0.3s ease;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+#loading-spinner {
+  display: none;
 }
 
 
@@ -74,7 +83,7 @@ button:disabled {
 }
 
 #add-task-btn:hover {
-    background-color: #9277FF;
+  background-color: #9277FF;
 }
 
 /* 3. Selectori Structurali: Stilizare pentru al 3-lea rând (tr:nth-child(3)) și .delete-row */
@@ -89,4 +98,65 @@ tr:nth-child(3) {
 
 .delete-row:hover {
   background-color: #bd5a21 !important;
+}
+
+/* 7. Modul Chaos: Flaky Promo Pop-up */
+.overlay-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  /* Fundal întunecat transparent */
+  z-index: 9999;
+  /* Ne asigurăm că e deasupra tuturor elementelor */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(3px);
+}
+
+.promo-box {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  max-width: 400px;
+  animation: popIn 0.3s ease-out forwards;
+  /* O mică animație vizuală */
+}
+
+.promo-box h3 {
+  color: #e74c3c;
+  margin-bottom: 15px;
+  font-size: 22px;
+}
+
+.promo-box p {
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.btn-close-promo {
+  background-color: #2c3e50;
+  color: white;
+  width: 100%;
+}
+
+.btn-close-promo:hover:not(:disabled) {
+  background-color: #1a252f;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
